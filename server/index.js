@@ -5,7 +5,6 @@ const port = 3000;
 // Middleware para manejar las solicitudes JSON
 app.use(express.json());
 
-// Ruta de ejemplo
 app.get('/', (req, res) => {
   res.send('Hola Mundo, este es el Backend en Node.js!');
 });
