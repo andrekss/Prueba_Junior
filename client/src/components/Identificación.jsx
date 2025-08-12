@@ -12,11 +12,38 @@ const Identificacion = () => {
     }
   };
 
-  const handleUpload = () => {
-    if (!image) {
-      setResponse('Por favor, seleccione una imagen antes de cargar.');
-      return;
-    }
+const handleUpload = async() => {
+  if (!image) {
+    setResponse('Por favor, seleccione una imagen antes de cargar.');
+    return;
+  }
+
+  // Convertir imagen a Base64
+  const reader = new FileReader();
+  reader.onloadend = async() => {
+    const base64String = reader.result; 
+    console.log('Base64:', base64String);
+
+    // Si necesitas mandarlo a un backend:
+    // fetch('/api/upload', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ image: base64String })
+    // });}
+
+    const res = await fetch('https://plant.id/api/v3/identification', {
+        method: 'POST',
+        headers: {
+          'Api-Key': 'AzPmUPH0GoWZqjbsNeqJlLtmMCActy61MAJrNcEB6Ijw5PxSml', // pon aquí tu API key real
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          images: [base64String],
+          latitude: 49.207,
+          longitude: 16.608,
+          similar_images: true
+        })
+      });
 
     setUploading(true);
     setResponse('Cargando...');
@@ -26,6 +53,10 @@ const Identificacion = () => {
       setResponse('Imagen cargada exitosamente.');
     }, 2000);
   };
+
+  reader.readAsDataURL(image); // Esto genera el Base64
+};
+
 
   return (
     <div>
