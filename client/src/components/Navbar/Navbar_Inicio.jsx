@@ -12,12 +12,13 @@ function Navbar_Inicio() {
         <Navbar.Toggle aria-controls="navbarNav" />
         <Navbar.Collapse id="navbarNav">
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Identificación</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/Identificacion">Identificación</Nav.Link>
             <Nav.Link href="#pricing">Busqueda de planta</Nav.Link>
             <Nav.Link href="#pricing">Pantalla de Familias</Nav.Link>
             <Nav.Link href="#pricing">Chatbot</Nav.Link>
             <Nav.Link href="#pricing">Historial de chats</Nav.Link>
+            <Nav.Link href="#pricing">Grafica de estadísticas</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
