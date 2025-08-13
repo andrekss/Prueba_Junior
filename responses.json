@@ -1,0 +1,56 @@
+{
+  "access_token": "GIe6akEJKXSBebJ",
+  "model_version": "plant_id:3.1.0",
+  "custom_id": null,
+  "input": {
+    "latitude": 49.207,
+    "longitude": 16.608,
+    "similar_images": true,
+    "images": [
+      "http://plant.id/media/imgs/44681b0e7ed14fa7b086c53f6daec144.jpg"
+    ],
+    "datetime": "2023-07-10T06:37:48.133286+00:00"
+  },
+  "result": {
+    "is_plant": {
+      "probability": 0.47637302,
+      "binary": false,
+      "threshold": 0.5
+    },
+    "classification": {
+      "suggestions": [
+        {
+          "id": "ae8faed4a61d9de2",
+          "name": "Leucojum vernum",
+          "probability": 0.9998723,
+          "similar_images": [
+            {
+              "id": "587aeca4494253948c702d8356b4bebc2557a63d",
+              "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/3/587/aeca4494253948c702d8356b4bebc2557a63d.jpg",
+              "license_name": "CC0",
+              "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+              "citation": "hen_ry",
+              "similarity": 0.683,
+              "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/3/587/aeca4494253948c702d8356b4bebc2557a63d.small.jpg"
+            },
+            {
+              "id": "dffa4fc0912feefa1516df8c20c080286556269f",
+              "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/3/dff/a4fc0912feefa1516df8c20c080286556269f.jpeg",
+              "similarity": 0.543,
+              "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/3/dff/a4fc0912feefa1516df8c20c080286556269f.small.jpeg"
+            }
+          ],
+          "details": {
+            "language": "en",
+            "entity_id": "ae8faed4a61d9de2"
+          }
+        }
+      ]
+    }
+  },
+  "status": "COMPLETED",
+  "sla_compliant_client": true,
+  "sla_compliant_system": true,
+  "created": 1688971068.133286,
+  "completed": 1688971068.496495
+}

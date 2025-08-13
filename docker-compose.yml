@@ -1,18 +1,39 @@
+version: "2"
 services:
-  backend:
-    build:
-      context: ./server
-      dockerfile: dockerfile
-    container_name: backend
-    ports:
-      - "5000:5000"
-    restart: always
+  #backend:
+  #  build:
+  #    context: ./server
+  #    dockerfile: dockerfile
+  #  container_name: backend
+  #  ports:
+  #    - "5000:5000"
+  #  restart: always
 
-  frontend:
-    build:
-      context: ./client
-      dockerfile: dockerfile
-    container_name: frontend
-    ports:
-      - "5173:80"
+  #frontend:
+  #  build:
+  #    context: ./client
+  #    dockerfile: dockerfile
+  #  container_name: frontend
+  #  ports:
+  #    - "5173:80"
+  #  restart: always
+
+  db:
+    image: postgres
     restart: always
+    environment:
+      - POSTGRES_USER=admin_postgres
+      - POSTGRES_PASSWORD=1231m0d__xaw,oxp
+    ports:
+      - '5433:5432'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - db2:/var/lib/postgresql/data
+volumes:
+  db2:
+
+

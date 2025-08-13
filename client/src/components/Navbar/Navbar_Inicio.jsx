@@ -16,7 +16,7 @@ function Navbar_Inicio() {
             <Nav.Link href="/Identificacion">Identificación</Nav.Link>
             <Nav.Link href="#pricing">Busqueda de planta</Nav.Link>
             <Nav.Link href="#pricing">Pantalla de Familias</Nav.Link>
-            <Nav.Link href="#pricing">Chatbot</Nav.Link>
+            <Nav.Link href="/chatbot">Chatbot</Nav.Link>
             <Nav.Link href="#pricing">Historial de chats</Nav.Link>
             <Nav.Link href="#pricing">Grafica de estadísticas</Nav.Link>
           </Nav>
