@@ -6,8 +6,28 @@ const chatbot = () => {
   const [responseApi, setResponseApi] = useState('');
 
   // Configuración
-  const [Prompt, setPromt] = useState('Eres un experto en plantas');
-  const [Bot, SetBopt] = useState('Eres un experto en plantas');
+  const [Prompt, setPromt] = useState('Eres un experto en '+localStorage.getItem("Nombre_Planta"));
+  const [Bot, SetBot] = useState('MyAppBot');
+
+  const Guardar = async () => {
+    const requestData = {
+      pregunta: pregunta,
+      respuesta: responseApi,
+    };
+
+    try {
+      const res = await fetch('http://localhost:3200/guardar_respuesta', {
+        method: 'POST',  // Especificamos el método POST
+        headers: {
+          'Content-Type': 'application/json', 
+        },
+        body: JSON.stringify(requestData),  // Convertimos el objeto a JSON para enviarlo
+      });
+
+    } catch (error) {
+      console.error('Error al enviar los datos:', error);
+    }
+  };
 
 
   const handleTextareaChange = (e) => {
@@ -16,13 +36,13 @@ const chatbot = () => {
 
   const handleSendChange = async(e) => {
     await askChatbot( pregunta, Prompt, 0.5, Bot);
-
+    Guardar();
   };
 
  const askChatbot = async (question, prompt, temperature, appName) => {
     try {
         console.log(localStorage.getItem("access_token"))
-      const res = await fetch(`${import.meta.env.VITE_APP_API_PLANT}/${localStorage.getItem("access_token")}/conversation`, {
+      const res = await fetch(`${import.meta.env.VITE_APP_API_PLANT}/identification/${localStorage.getItem("access_token")}/conversation`, {
         method: 'POST',
         headers: {
           'Api-Key': import.meta.env.VITE_APP_API_KEY, 
@@ -53,7 +73,6 @@ const chatbot = () => {
     <div>
       <h2>Chatbot</h2>
       <p>Preguntale lo que quieras al agente de IA sobre la planta {localStorage.getItem("Nombre_Planta")}</p>
-      <h6></h6>
 
       <div className="mb-3">
         <label for="comment" class="form-label">Preguntar:</label>

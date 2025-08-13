@@ -1,4 +1,6 @@
 const express = require('express');
+const cors = require('cors');  // Importamos el middleware CORS
+
 const { Client } = require('pg');  // Usar pg para PostgreSQL
 require('dotenv').config();  // Cargar las variables de entorno desde el archivo .env
 
@@ -6,6 +8,7 @@ const app = express();
 const port = 3200;
 
 // Middleware para manejar las solicitudes JSON
+app.use(cors());
 app.use(express.json());
 
 // Crear una instancia del cliente de PostgreSQL
@@ -24,20 +27,19 @@ client.connect();
 app.post('/guardar_respuesta', async (req, res) => {
   const { pregunta, respuesta } = req.body;
 
-  // Validar que los datos necesarios estén presentes
   if (!pregunta || !respuesta) {
     return res.status(400).send('Faltan parámetros: pregunta o respuesta');
   }
 
   try {
     // Insertar la pregunta y respuesta en la base de datos
-    const query = 'INSERT INTO Historial_Preguntas (pregunta, respuesta) VALUES ($1, $2)';
-    await client.query(query, [pregunta, respuesta]);
+    const query = 'INSERT INTO Historial_Preguntas (pregunta, respuesta, Fecha) VALUES ($1, $2, $3)';
+    await client.query(query, [pregunta, respuesta,new Date(Date.now())]);
 
-    res.send('Pregunta y respuesta guardadas correctamente');
+    res.send({"message":'Pregunta y respuesta guardadas correctamente'});
   } catch (error) {
     console.error('Error al guardar en la base de datos:', error);
-    res.status(500).send('Error al guardar la pregunta y respuesta');
+    res.status(500).send({"error":'Error al guardar la pregunta y respuesta'});
   }
 });
 
