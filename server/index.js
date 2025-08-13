@@ -33,7 +33,7 @@ app.post('/guardar_respuesta', async (req, res) => {
 
   try {
     // Insertar la pregunta y respuesta en la base de datos
-    const query = 'INSERT INTO Historial_Preguntas (pregunta, respuesta, Fecha) VALUES ($1, $2, $3)';
+    const query = 'INSERT INTO Historial_Preguntas ( pregunta, respuesta, Fecha) VALUES ($1, $2, $3)';
     await client.query(query, [pregunta, respuesta,new Date(Date.now())]);
 
     res.send({"message":'Pregunta y respuesta guardadas correctamente'});
@@ -42,6 +42,32 @@ app.post('/guardar_respuesta', async (req, res) => {
     res.status(500).send({"error":'Error al guardar la pregunta y respuesta'});
   }
 });
+
+app.post('/guardar_planta', async (req, res) => {
+  const { Nombre, Taxonomia,Imagen } = req.body;
+
+  try {
+    // Insertar la pregunta y respuesta en la base de datos
+    const query = 'INSERT INTO Plantas ( Nombre, Taxonomia, Imagen) VALUES ($1, $2, $3)';
+    await client.query(query, [Nombre, Taxonomia,Imagen]);
+
+    res.send({"message":'Plantas guardadas correctamente'});
+  } catch (error) {
+    console.error('Error al guardar en la base de datos:', error);
+    res.status(500).send({"error":'Error al guardar plantas'});
+  }
+});
+
+app.get("/historial", async (req, res) => {
+  try {
+    const resultado = await client.query("SELECT * FROM Historial_Preguntas");
+    res.json(resultado.rows); // devolvemos como JSON
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error obteniendo datos");
+  }
+});
+
 
 // Inicia el servidor
 app.listen(port, () => {

@@ -1,19 +1,31 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 
 const chatbot = () => {
-  
+  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
   const [pregunta, Setpregunta] = useState('');
   const [responseApi, setResponseApi] = useState('');
 
   // Configuración
   const [Prompt, setPromt] = useState('Eres un experto en '+localStorage.getItem("Nombre_Planta"));
   const [Bot, SetBot] = useState('MyAppBot');
+  
+  const handleTextareaChange = (e) => {
+    Setpregunta(e.target.value); 
+  };
+
+  const handleSendChange = async (e) => {
+    askChatbot( pregunta, Prompt, 0.5, Bot);
+    Guardar();
+  };
+
 
   const Guardar = async () => {
     const requestData = {
       pregunta: pregunta,
       respuesta: responseApi,
     };
+    console.log(requestData);
 
     try {
       const res = await fetch('http://localhost:3200/guardar_respuesta', {
@@ -24,24 +36,15 @@ const chatbot = () => {
         body: JSON.stringify(requestData),  // Convertimos el objeto a JSON para enviarlo
       });
 
+      
+
     } catch (error) {
       console.error('Error al enviar los datos:', error);
     }
   };
 
-
-  const handleTextareaChange = (e) => {
-    Setpregunta(e.target.value); 
-  };
-
-  const handleSendChange = async(e) => {
-    await askChatbot( pregunta, Prompt, 0.5, Bot);
-    Guardar();
-  };
-
- const askChatbot = async (question, prompt, temperature, appName) => {
+  const askChatbot = async (question, prompt, temperature, appName) => {
     try {
-        console.log(localStorage.getItem("access_token"))
       const res = await fetch(`${import.meta.env.VITE_APP_API_PLANT}/identification/${localStorage.getItem("access_token")}/conversation`, {
         method: 'POST',
         headers: {
@@ -98,7 +101,7 @@ const chatbot = () => {
         <textarea
           className="form-control"
           id="comment"
-          rows="10"
+          rows="5"
           value={responseApi} // El valor del textarea se actualiza con el estado de 'response'
           readOnly
         />

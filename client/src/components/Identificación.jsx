@@ -14,6 +14,79 @@ const Identificacion = () => {
     }
   };
 
+  async function fetchPlanta(Nombre_Planta) {
+
+      let access_token
+      try {
+        const res = await fetch(
+          `https://plant.id/api/v3/kb/plants/name_search?q=${Nombre_Planta}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Api-Key": import.meta.env.VITE_APP_API_KEY
+            }
+          }
+        );
+        
+        
+        if (!res.ok) {
+          throw new Error(`Error HTTP: ${res.status}`);
+        }
+
+        const data = await res.json();
+        access_token = data.entities[0].access_token;
+        console.log(data);
+        //setPlanta(data);
+      } catch (error) {
+        console.error("Error obteniendo datos:", error);
+      }
+      let data = "";
+      try {
+        const res = await fetch(
+          `https://plant.id/api/v3/kb/plants/${access_token}?details=common_names,url,description,taxonomy,rank,gbif_id,inaturalist_id,image,synonyms,edible_parts,watering,propagation_methods`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Api-Key": import.meta.env.VITE_APP_API_KEY
+            }
+          }
+        );
+        
+        if (!res.ok) {
+          throw new Error(`Error HTTP: ${res.status}`);
+        }
+
+        data = await res.json();
+        console.log(data);
+        //setPlanta(data);
+      } catch (error) {
+        console.error("Error obteniendo datos:", error);
+      }
+
+
+    const requestDataPlanta = {
+      Nombre: localStorage.getItem("Nombre_Planta"),
+      Taxonomia: data.taxonomy.class,
+      Imagen: data.image.value
+    };
+    console.log(requestDataPlanta);
+
+    try {
+      const res = await fetch('http://localhost:3200/guardar_planta', {
+        method: 'POST',  // Especificamos el método POST
+        headers: {
+          'Content-Type': 'application/json', 
+        },
+        body: JSON.stringify(requestDataPlanta),  // Convertimos el objeto a JSON para enviarlo
+      });
+
+    } catch (error) {
+      console.error('Error al enviar los datos:', error);
+    }
+    }
+
 const handleUpload = async() => {
   if (!image) {
     setResponse('Por favor, seleccione una imagen antes de cargar.');
@@ -58,7 +131,8 @@ const handleUpload = async() => {
     // directo al localstorage
     localStorage.setItem('access_token', data.access_token);
     localStorage.setItem('Nombre_Planta',Sugerencias.name);
-
+    
+    fetchPlanta(Sugerencias.name);
 
     setUploading(true);
     setResponse('Cargando...');
