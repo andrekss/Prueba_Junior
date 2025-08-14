@@ -23,7 +23,7 @@ const client = new Client({
 // Conectar a la base de datos
 client.connect();
 
-
+// Registros
 app.post('/guardar_respuesta', async (req, res) => {
   const { pregunta, respuesta } = req.body;
 
@@ -44,17 +44,28 @@ app.post('/guardar_respuesta', async (req, res) => {
 });
 
 app.post('/guardar_planta', async (req, res) => {
-  const { Nombre, Taxonomia,Imagen } = req.body;
+  const { Nombre, Taxonomia } = req.body;
 
   try {
-    // Insertar la pregunta y respuesta en la base de datos
-    const query = 'INSERT INTO Plantas ( Nombre, Taxonomia, Imagen) VALUES ($1, $2, $3)';
-    await client.query(query, [Nombre, Taxonomia,Imagen]);
+
+    const query = 'INSERT INTO Plantas ( Nombre, Taxonomia) VALUES ($1, $2)';
+    await client.query(query, [Nombre, Taxonomia]);
 
     res.send({"message":'Plantas guardadas correctamente'});
   } catch (error) {
     console.error('Error al guardar en la base de datos:', error);
     res.status(500).send({"error":'Error al guardar plantas'});
+  }
+});
+
+// Consultas
+app.get("/Mostrar_Planta", async (req, res) => {
+  try {
+    const resultado = await client.query("SELECT * FROM Plantas");
+    res.json(resultado.rows); // devolvemos como JSON
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error obteniendo datos");
   }
 });
 

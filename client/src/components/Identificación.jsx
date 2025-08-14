@@ -69,7 +69,6 @@ const Identificacion = () => {
     const requestDataPlanta = {
       Nombre: localStorage.getItem("Nombre_Planta"),
       Taxonomia: data.taxonomy.class,
-      Imagen: data.image.value
     };
     console.log(requestDataPlanta);
 
@@ -98,13 +97,6 @@ const handleUpload = async() => {
   reader.onloadend = async() => {
     const base64String = reader.result; 
     //console.log('Base64:', base64String);
-
-    // Si necesitas mandarlo a un backend:
-    // fetch('/api/upload', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ image: base64String })
-    // });}
 
     console.log(import.meta.env)
     const res = await fetch(`${import.meta.env.VITE_APP_API_PLANT}/identification`, {
@@ -151,8 +143,8 @@ const handleUpload = async() => {
 
   return (
     <div>
-      <h2>Identcación</h2>
-      <p>Aquí puede cargar sus documentos e imágenes.</p>
+      <h2>Identificación</h2>
+      <p>Aqui puedes cargar las imagenes de las plantas.</p>
 
       <div className="upload-section" style={{ marginBottom: '20px' }}>
         <input

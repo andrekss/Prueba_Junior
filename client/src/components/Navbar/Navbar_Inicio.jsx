@@ -14,7 +14,7 @@ function Navbar_Inicio() {
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/Identificacion">Identificación</Nav.Link>
-            <Nav.Link href="#pricing">Busqueda de planta</Nav.Link>
+            <Nav.Link href="/Busqueda">Busqueda de planta</Nav.Link>
             <Nav.Link href="#pricing">Pantalla de Familias</Nav.Link>
             <Nav.Link href="/chatbot">Chatbot</Nav.Link>
             <Nav.Link href="/Historial">Historial de chats</Nav.Link>

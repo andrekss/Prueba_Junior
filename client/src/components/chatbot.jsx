@@ -16,14 +16,13 @@ const chatbot = () => {
 
   const handleSendChange = async (e) => {
     askChatbot( pregunta, Prompt, 0.5, Bot);
-    Guardar();
   };
 
 
   const Guardar = async () => {
     const requestData = {
       pregunta: pregunta,
-      respuesta: responseApi,
+      respuesta: localStorage.getItem("respuesta"),
     };
     console.log(requestData);
 
@@ -63,7 +62,9 @@ const chatbot = () => {
       console.log('Chatbot Response:', chatData);
 
       // Extraer y mostrar la respuesta del chatbot
+      localStorage.setItem("respuesta",chatData.messages[chatData.messages.length - 1].content)
       setResponseApi(chatData.messages[chatData.messages.length - 1].content);
+      Guardar();
 
     } catch (error) {
       console.error('Error al interactuar con el chatbot:', error);

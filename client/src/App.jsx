@@ -5,6 +5,7 @@ import Chatbot from './components/chatbot.jsx'
 import Historial from './components/Historial.jsx'
 import './App.css'
 import Identificación from './components/Identificación.jsx'
+import Busqueda from './components/BusquedaPlanta.jsx'
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
             <Route path="/identificacion" element={<Identificación/>} />
             <Route path="/chatbot" element={<Chatbot/>} />
             <Route path="/Historial" element={<Historial/>} />
+            <Route path="/Busqueda" element={<Busqueda/>} />
           </Routes>
         </Router>
       </div>
